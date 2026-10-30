@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Tindahan ni Juan | Sari-Sari Store</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
+    <!-- Design System -->
+    <style type="text/tailwindcss">
+        @custom-variant dark (&:where(.dark, .dark *));
+
+        @theme {
+            --color-cream: #F8F5E9;
+            --color-green: #246B45;
+            --color-yellow: #F5A623;
+            --color-ink: #20251F;
+        }
+
+        :root {
+            --page-bg: #F8F5E9;
+            --text-color: #20251F;
+            --muted-color: #526052;
+        }
+
+        .dark {
+            --page-bg: #171D19;
+            --text-color: #F8F5E9;
+            --muted-color: #D0DCCF;
+        }
+
+        body {
+            background-color: var(--page-bg);
+            color: var(--text-color);
+        }
+
+        @layer components {
+            .btn-primary {
+                @apply inline-flex items-center justify-center gap-2 rounded-full bg-green px-6 py-3 font-bold text-white shadow-[4px_4px_0px_#20251F] hover:bg-yellow hover:text-ink dark:bg-yellow dark:text-ink dark:shadow-[4px_4px_0px_#F8F5E9];
+            }
+
+            .btn-secondary {
+                @apply inline-flex items-center justify-center rounded-full border-2 border-ink px-6 py-3 font-bold text-ink hover:bg-yellow dark:border-cream dark:text-cream dark:hover:bg-yellow dark:hover:text-ink;
+            }
+
+            .product-card {
+                @apply rounded-3xl border-2 border-ink bg-white p-5 shadow-[5px_5px_0px_#20251F] dark:border-cream dark:bg-[#25342A] dark:shadow-[5px_5px_0px_#F8F5E9];
+            }
+
+            .product-image {
+                @apply h-52 w-full rounded-2xl object-cover;
+            }
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        section {
+            scroll-margin-top: 90px;
+        }
+
+        .progress-bar {
+            transform-origin: left center;
+            transform: scaleX(0);
+        }
+
+        .image-fallback {
+            aspect-ratio: 16 / 10;
+            background: #E8E3D3;
+            color: #20251F;
+        }
+
+        .dark .image-fallback {
+            background: #344638;
+            color: #F8F5E9;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            html {
+                scroll-behavior: auto;
+            }
+        }
+    </style>
+</head>
+
+<body class="min-h-screen overflow-x-hidden">
+
+    <!-- SCROLL PROGRESS BAR -->
+    <div
+        id="progressBar"
+        class="progress-bar fixed left-0 top-0 z-[100] h-1.5 w-full bg-yellow"
+        aria-hidden="true">
+    </div>
+
+    <!-- HEADER -->
+    <header class="sticky top-0 z-50 border-b-2 border-ink bg-cream/95 backdrop-blur-md dark:border-cream dark:bg-[#171D19]/95">
+
+        <div class="mx-auto flex max-w-7xl items-center justify-between gap-4 px-5 py-4 md:px-10">
+
+            <a href="#home" class="text-xl font-black tracking-tight text-green dark:text-yellow md:text-2xl">
+                TINDAHAN<span class="text-ink dark:text-cream">.</span>
+            </a>
+
+            <nav aria-label="Main navigation" class="hidden items-center gap-6 md:flex">
+                <a href="#home" class="font-bold text-ink hover:text-green dark:text-cream dark:hover:text-yellow">Home</a>
+                <a href="#about" class="font-bold text-ink hover:text-green dark:text-cream dark:hover:text-yellow">About</a>
+                <a href="#products" class="font-bold text-ink hover:text-green dark:text-cream dark:hover:text-yellow">Products</a>
+                <a href="#contact" class="font-bold text-ink hover:text-green dark:text-cream dark:hover:text-yellow">Contact</a>
+            </nav>
+
+            <div class="flex items-center gap-3">
+
+                <button
+                    id="darkModeToggle"
+                    type="button"
+                    aria-label="Toggle dark mode"
+                    aria-pressed="true"
+                    class="rounded-full border-2 border-ink bg-yellow px-4 py-2 font-bold text-ink hover:bg-green hover:text-white dark:border-cream dark:bg-green dark:text-white dark:hover:bg-yellow dark:hover:text-ink">
+                    ☀ / ☾
+                </button>
+
+                <a href="#products" class="hidden rounded-full bg-green px-5 py-2 font-bold text-white hover:bg-yellow hover:text-ink dark:bg-yellow dark:text-ink sm:inline-flex">
+                    Shop Now ↗
+                </a>
+
+            </div>
+        </div>
+
+        <!-- MOBILE NAVIGATION -->
+        <nav aria-label="Mobile navigation" class="flex justify-center gap-5 border-t border-ink/20 px-3 py-3 text-sm font-bold dark:border-cream/20 md:hidden">
+            <a href="#home" class="text-ink hover:text-green dark:text-cream dark:hover:text-yellow">Home</a>
+            <a href="#about" class="text-ink hover:text-green dark:text-cream dark:hover:text-yellow">About</a>
+            <a href="#products" class="text-ink hover:text-green dark:text-cream dark:hover:text-yellow">Products</a>
+            <a href="#contact" class="text-ink hover:text-green dark:text-cream dark:hover:text-yellow">Contact</a>
+        </nav>
+
+    </header>
+
+    <main>
+
+        <!-- HERO SECTION -->
+        <section id="home" class="relative overflow-hidden bg-[var(--page-bg)] px-5 py-20 md:px-10 md:py-28">
+
+            <div class="mx-auto grid max-w-7xl items-center gap-12 md:grid-cols-2">
+
+                <div class="hero-content">
+
+                    <span class="mb-6 inline-flex rounded-full border-2 border-ink bg-yellow px-4 py-2 text-sm font-black text-ink dark:border-cream">
+                        🇵🇭 YOUR FRIENDLY NEIGHBORHOOD STORE
+                    </span>
+
+                    <h1 class="mb-6 text-5xl leading-tight font-black tracking-tight text-ink dark:text-cream md:text-7xl">
+                        Welcome to
+                        <span class="text-green dark:text-yellow">Tindahan</span>
+                        ni Juan<span class="text-yellow">.</span>
+                    </h1>
+
+                    <p class="mb-8 max-w-lg text-lg leading-relaxed text-[var(--muted-color)]">
+                        Your everyday essentials, favorite snacks, and refreshing drinks are always just around the corner.
+                    </p>
+
+                    <div class="flex flex-wrap gap-4">
+                        <a href="#products" class="btn-primary">
+                            Explore Products ↗
+                        </a>
+
+                        <a href="#about" class="btn-secondary">
+                            Learn More
+                        </a>
+                    </div>
+
+                    <p class="mt-10 font-bold text-green dark:text-yellow">
+                        "Mura na, malapit pa!"
+                    </p>
+
+                </div>
+
+                <!-- HERO IMAGE -->
+                <div class="hero-image relative">
+
+                    <div class="absolute -right-4 -top-4 z-10 rotate-6 rounded-2xl border-2 border-ink bg-yellow p-4 font-black text-ink shadow-lg dark:border-cream">
+                        OPEN DAILY!
+                    </div>
+
+                    <div class="relative">
+                        <img
+                            src="https://images.unsplash.com/photo-1604719312566-8912e9c8a213?auto=format&fit=crop&w=1000&q=85"
+                            alt="Store shelves filled with grocery products"
+                            onerror="this.hidden=true;this.nextElementSibling.classList.remove('hidden')"
+                            class="h-[350px] w-full rounded-[2rem] border-4 border-ink object-cover shadow-[10px_10px_0px_#246B45] dark:border-cream md:h-[480px]"
+                        >
+
+                        <div class="image-fallback hidden h-[350px] w-full items-center justify-center rounded-[2rem] border-4 border-ink text-center shadow-[10px_10px_0px_#246B45] dark:border-cream md:h-[480px]">
+                            <div>
+                                <span class="text-7xl">🏪</span>
+                                <p class="mt-4 text-xl font-black">Tindahan ni Juan</p>
+                                <p class="text-sm">Your Neighborhood Store</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="absolute -bottom-5 -left-3 rounded-2xl border-2 border-ink bg-white p-4 shadow-lg dark:border-cream dark:bg-[#25342A]">
+                        <p class="text-sm font-bold text-[var(--muted-color)]">Your local favorite</p>
+                        <p class="text-xl font-black text-green dark:text-yellow">Since Day One!</p>
+                    </div>
+
+                </div>
+
+            </div>
+        </section>
+
+        <!-- ABOUT SECTION -->
+        <section id="about" class="reveal border-y-2 border-ink bg-green px-5 py-20 text-white dark:border-cream dark:bg-[#25342A] md:px-10">
+
+            <div class="mx-auto grid max-w-7xl gap-10 md:grid-cols-2 md:items-center">
+
+                <div>
+                    <span class="mb-4 inline-block rounded-full bg-yellow px-4 py-2 text-sm font-black text-ink">
+                        ABOUT OUR STORE
+                    </span>
+
+                    <h2 class="mb-6 text-4xl font-black md:text-5xl">
+                        Small Store,
+                        <span class="text-yellow">Big Convenience.</span>
+                    </h2>
+
+                    <p class="max-w-xl text-lg leading-relaxed text-white">
+                        Tindahan ni Juan is a friendly Filipino sari-sari store that provides affordable everyday essentials for the community. From delicious snacks and refreshing drinks to household necessities, we make shopping simple, convenient, and accessible for everyone.
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-2 gap-4">
+
+                    <div class="rounded-3xl border-2 border-white bg-white/10 p-6">
+                        <span class="text-4xl">🛒</span>
+                        <h3 class="mt-4 text-xl font-black">Convenient</h3>
+                        <p class="mt-2 text-sm text-white">Everyday products nearby.</p>
+                    </div>
+
+                    <div class="rounded-3xl border-2 border-white bg-white/10 p-6">
+                        <span class="text-4xl">💰</span>
+                        <h3 class="mt-4 text-xl font-black">Affordable</h3>
+                        <p class="mt-2 text-sm text-white">Budget-friendly essentials.</p>
+                    </div>
+
+                    <div class="rounded-3xl border-2 border-white bg-white/10 p-6">
+                        <span class="text-4xl">🤝</span>
+                        <h3 class="mt-4 text-xl font-black">Friendly</h3>
+                        <p class="mt-2 text-sm text-white">A store for everyone.</p>
+                    </div>
+
+                    <div class="rounded-3xl border-2 border-white bg-white/10 p-6">
+                        <span class="text-4xl">🏪</span>
+                        <h3 class="mt-4 text-xl font-black">Local</h3>
+                        <p class="mt-2 text-sm text-white">Proudly Filipino-inspired.</p>
+                    </div>
+
+                </div>
+
+            </div>
+        </section>
+
+        <!-- PRODUCTS SECTION -->
+        <section id="products" class="reveal bg-[var(--page-bg)] px-5 py-20 md:px-10">
+
+            <div class="mx-auto max-w-7xl">
+
+                <div class="mb-12 text-center">
+
+                    <span class="rounded-full border-2 border-ink bg-yellow px-4 py-2 text-sm font-black text-ink dark:border-cream">
+                        WHAT WE OFFER
+                    </span>
+
+                    <h2 class="mt-6 text-4xl font-black text-ink dark:text-cream md:text-5xl">
+                        Everyday <span class="text-green dark:text-yellow">Essentials.</span>
+                    </h2>
+
+                    <p class="mx-auto mt-4 max-w-xl text-[var(--muted-color)]">
+                        Discover some of the favorite products available at Tindahan ni Juan.
+                    </p>
+
+                </div>
+
+                <!-- PRODUCT GRID -->
+                <div class="grid grid-cols-1 gap-7 sm:grid-cols-2 lg:grid-cols-3">
+
+                    <!-- PRODUCT 1: INSTANT NOODLES -->
+                    <article class="product-card reveal">
+
+                        <div class="relative overflow-hidden rounded-2xl">
+
+                            <img
+                                src="https://images.unsplash.com/photo-1569718212165-3a8278d5f624?auto=format&fit=crop&w=700&q=85"
+                                alt="Instant noodles"
+                                loading="lazy"
+                                onerror="this.hidden=true;this.nextElementSibling.classList.remove('hidden')"
+                                class="product-image"
+                            >
+
+                            <div class="image-fallback hidden flex items-center justify-center rounded-2xl text-center">
+                                <div>
+                                    <span class="text-7xl">🍜</span>
+                                    <p class="mt-3 font-black">Instant Noodles</p>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="mt-5 flex items-center justify-between gap-2">
+                            <h3 class="text-xl font-black text-ink dark:text-cream">Instant Noodles</h3>
+                            <span class="rounded-full bg-yellow px-3 py-1 text-xs font-black text-ink">POPULAR</span>
+                        </div>
+
+                        <p class="mt-2 text-sm text-[var(--muted-color)]">
+                            Quick and delicious noodles for your merienda or meals.
+                        </p>
+
+                        <p class="mt-4 font-black text-green dark:text-yellow">Budget Friendly</p>
+
+                    </article>
+
+                    <!-- PRODUCT 2: SOFT DRINKS -->
+                    <article class="product-card reveal">
+
+                        <div class="relative overflow-hidden rounded-2xl">
+
+                            <img
+                                src="https://images.unsplash.com/photo-1544145945-f90425340c7e?auto=format&fit=crop&w=700&q=85"
+                                alt="Refreshing drinks"
+                                loading="lazy"
+                                onerror="this.hidden=true;this.nextElementSibling.classList.remove('hidden')"
+                                class="product-image"
+                            >
+
+                            <div class="image-fallback hidden flex items-center justify-center rounded-2xl text-center">
+                                <div>
+                                    <span class="text-7xl">🥤</span>
+                                    <p class="mt-3 font-black">Soft Drinks</p>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="mt-5 flex items-center justify-between gap-2">
+                            <h3 class="text-xl font-black text-ink dark:text-cream">Soft Drinks</h3>
+                            <span class="rounded-full bg-yellow px-3 py-1 text-xs font-black text-ink">REFRESH</span>
+                        </div>
+
+                        <p class="mt-2 text-sm text-[var(--muted-color)]">
+                            Refreshing beverages for hot and sunny days.
+                        </p>
+
+                        <p class="mt-4 font-black text-green dark:text-yellow">Budget Friendly</p>
+
+                    </article>
+
+                    <!-- PRODUCT 3: CHIPS AND SNACKS -->
+                    <article class="product-card reveal">
+
+                        <div class="relative overflow-hidden rounded-2xl">
+
+                            <img
+                                src="https://images.unsplash.com/photo-1566478989037-eec170784d0b?auto=format&fit=crop&w=700&q=85"
+                                alt="Potato chips and assorted snacks"
+                                loading="lazy"
+                                onerror="this.hidden=true;this.nextElementSibling.classList.remove('hidden')"
+                                class="product-image"
+                            >
+
+                            <div class="image-fallback hidden flex items-center justify-center rounded-2xl text-center">
+                                <div>
+                                    <span class="text-7xl">🍟</span>
+                                    <p class="mt-3 font-black">Chips & Snacks</p>
+                                    <p class="text-sm">Delicious Filipino Merienda</p>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="mt-5 flex items-center justify-between gap-2">
+                            <h3 class="text-xl font-black text-ink dark:text-cream">Chips & Snacks</h3>
+                            <span class="rounded-full bg-yellow px-3 py-1 text-xs font-black text-ink">FAVORITE</span>
+                        </div>
+
+                        <p class="mt-2 text-sm text-[var(--muted-color)]">
+                            Tasty chips, crackers, and Filipino snacks perfect for sharing.
+                        </p>
+
+                        <p class="mt-4 font-black text-green dark:text-yellow">Budget Friendly</p>
+
+                    </article>
+
+                    <!-- PRODUCT 4: CANNED GOODS -->
+                    <article class="product-card reveal">
+
+                        <div class="relative overflow-hidden rounded-2xl">
+
+                            <img
+                                src="https://images.unsplash.com/photo-1584263347416-85a696b4eda7?auto=format&fit=crop&w=700&q=85"
+                                alt="Canned grocery products"
+                                loading="lazy"
+                                onerror="this.hidden=true;this.nextElementSibling.classList.remove('hidden')"
+                                class="product-image"
+                            >
+
+                            <div class="image-fallback hidden flex items-center justify-center rounded-2xl text-center">
+                                <div>
+                                    <span class="text-7xl">🥫</span>
+                                    <p class="mt-3 font-black">Canned Goods</p>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="mt-5 flex items-center justify-between gap-2">
+                            <h3 class="text-xl font-black text-ink dark:text-cream">Canned Goods</h3>
+                            <span class="rounded-full bg-yellow px-3 py-1 text-xs font-black text-ink">ESSENTIAL</span>
+                        </div>
+
+                        <p class="mt-2 text-sm text-[var(--muted-color)]">
+                            Convenient canned food for your everyday meals.
+                        </p>
+
+                        <p class="mt-4 font-black text-green dark:text-yellow">Budget Friendly</p>
+
+                    </article>
+
+                    <!-- PRODUCT 5: PERSONAL CARE -->
+                    <article class="product-card reveal">
+
+                        <div class="relative overflow-hidden rounded-2xl">
+
+                            <img
+                                src="https://images.unsplash.com/photo-1608248543803-ba4f8c70ae0b?auto=format&fit=crop&w=700&q=85"
+                                alt="Personal care and hygiene products"
+                                loading="lazy"
+                                onerror="this.hidden=true;this.nextElementSibling.classList.remove('hidden')"
+                                class="product-image"
+                            >
+
+                            <div class="image-fallback hidden flex items-center justify-center rounded-2xl text-center">
+                                <div>
+                                    <span class="text-7xl">🧴</span>
+                                    <p class="mt-3 font-black">Personal Care</p>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="mt-5 flex items-center justify-between gap-2">
+                            <h3 class="text-xl font-black text-ink dark:text-cream">Personal Care</h3>
+                            <span class="rounded-full bg-yellow px-3 py-1 text-xs font-black text-ink">DAILY USE</span>
+                        </div>
+
+                        <p class="mt-2 text-sm text-[var(--muted-color)]">
+                            Hygiene and personal care products for everyone.
+                        </p>
+
+                        <p class="mt-4 font-black text-green dark:text-yellow">Budget Friendly</p>
+
+                    </article>
+
+                    <!-- PRODUCT 6: HOUSEHOLD ESSENTIALS -->
+                    <article class="product-card reveal">
+
+                        <div class="relative overflow-hidden rounded-2xl">
+
+                            <img
+                                src="https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=700&q=85"
+                                alt="Fresh grocery and household essentials"
+                                loading="lazy"
+                                onerror="this.hidden=true;this.nextElementSibling.classList.remove('hidden')"
+                                class="product-image"
+                            >
+
+                            <div class="image-fallback hidden flex items-center justify-center rounded-2xl text-center">
+                                <div>
+                                    <span class="text-7xl">🛍️</span>
+                                    <p class="mt-3 font-black">Household Essentials</p>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="mt-5 flex items-center justify-between gap-2">
+                            <h3 class="text-xl font-black text-ink dark:text-cream">Household Essentials</h3>
+                            <span class="rounded-full bg-yellow px-3 py-1 text-xs font-black text-ink">MUST HAVE</span>
+                        </div>
+
+                        <p class="mt-2 text-sm text-[var(--muted-color)]">
+                            Useful everyday necessities for your home.
+                        </p>
+
+                        <p class="mt-4 font-black text-green dark:text-yellow">Budget Friendly</p>
+
+                    </article>
+
+                </div>
+
+            </div>
+        </section>
+
+        <!-- CONTACT SECTION -->
+        <section id="contact" class="reveal border-t-2 border-ink bg-yellow px-5 py-20 dark:border-cream dark:bg-[#25342A] md:px-10">
+
+            <div class="mx-auto grid max-w-7xl gap-12 md:grid-cols-2">
+
+                <div>
+
+                    <span class="inline-block rounded-full border-2 border-ink bg-cream px-4 py-2 text-sm font-black text-ink dark:border-cream">
+                        GET IN TOUCH
+                    </span>
+
+                    <h2 class="mt-6 text-4xl font-black text-ink dark:text-cream md:text-6xl">
+                        Let's Talk!
+                    </h2>
+
+                    <p class="mt-5 max-w-md text-lg leading-relaxed text-ink dark:text-cream">
+                        Have a question or suggestion? Send us a message. We would love to hear from you!
+                    </p>
+
+                    <div class="mt-8 space-y-4 font-bold text-ink dark:text-cream">
+                        <p>📍 Your Friendly Neighborhood</p>
+                        <p>🏪 Tindahan ni Juan</p>
+                        <p>🤝 Always happy to serve you!</p>
+                    </div>
+
+                </div>
+
+                <!-- CONTACT FORM -->
+                <form id="contactForm" class="rounded-3xl border-2 border-ink bg-cream p-6 shadow-[8px_8px_0px_#20251F] dark:border-cream dark:bg-[#171D19] md:p-8">
+
+                    <div class="mb-5">
+                        <label for="name" class="mb-2 block font-black text-ink dark:text-cream">
+                            Your Name
+                        </label>
+
+                        <input
+                            type="text"
+                            id="name"
+                            name="name"
+                            placeholder="Enter your name"
+                            required
+                            class="w-full rounded-xl border-2 border-ink bg-white px-4 py-3 text-ink outline-none focus:border-green dark:border-cream dark:bg-[#25342A] dark:text-cream"
+                        >
+                    </div>
+
+                    <div class="mb-5">
+                        <label for="email" class="mb-2 block font-black text-ink dark:text-cream">
+                            Email Address
+                        </label>
+
+                        <input
+                            type="email"
+                            id="email"
+                            name="email"
+                            placeholder="Enter your email"
+                            required
+                            class="w-full rounded-xl border-2 border-ink bg-white px-4 py-3 text-ink outline-none focus:border-green dark:border-cream dark:bg-[#25342A] dark:text-cream"
+                        >
+                    </div>
+
+                    <div class="mb-6">
+                        <label for="message" class="mb-2 block font-black text-ink dark:text-cream">
+                            Your Message
+                        </label>
+
+                        <textarea
+                            id="message"
+                            name="message"
+                            rows="5"
+                            placeholder="Write your message here..."
+                            required
+                            class="w-full resize-y rounded-xl border-2 border-ink bg-white px-4 py-3 text-ink outline-none focus:border-green dark:border-cream dark:bg-[#25342A] dark:text-cream"
+                        ></textarea>
+                    </div>
+
+                    <button type="submit" class="btn-primary w-full">
+                        Send Message ↗
+                    </button>
+
+                    <p id="formMessage" class="mt-4 text-center text-sm font-bold text-green dark:text-yellow" aria-live="polite"></p>
+
+                </form>
+
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="border-t-2 border-ink bg-cream px-5 py-8 dark:border-cream dark:bg-[#171D19] md:px-10">
+
+        <div class="mx-auto flex max-w-7xl flex-col items-center justify-between gap-5 text-center md:flex-row md:text-left">
+
+            <div>
+                <h2 class="text-2xl font-black text-green dark:text-yellow">
+                    TINDAHAN NI JUAN.
+                </h2>
+
+                <p class="mt-2 text-sm text-[var(--muted-color)]">
+                    Your everyday essentials, just around the corner.
+                </p>
+            </div>
+
+            <p class="text-sm font-bold text-ink dark:text-cream">
+                © 2026 Tindahan ni Juan. All Rights Reserved.
+            </p>
+
+            <a href="#home" class="font-black text-green hover:text-yellow dark:text-yellow">
+                Back to Top ↑
+            </a>
+
+        </div>
+
+    </footer>
+
+    <!-- GSAP -->
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
+
+    <!-- SCROLLTRIGGER -->
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
+
+    <!-- JAVASCRIPT -->
+    <script src="script.js"></script>
+
+</body>
+</html>
+
+
+
