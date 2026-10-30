@@ -9,7 +9,7 @@ Tindahan ni Juan is a small neighborhood store that provides affordable everyday
 
 The website showcases the store's identity, products, services, and contact information through a modern and responsive design.
 
-## 🎨 Design System
+## 🎨 Design Systems
 
 ### Color Palette (60-30-10 Rule)
 
